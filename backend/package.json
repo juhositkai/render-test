@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo"
+    "test": "echo",
+    "build:ui": "rm -rf build && cd "
   },
   "author": "Juho Ropanen",
   "license": "MIT",
