@@ -50,7 +50,7 @@ app.get('/api/notes', (req, res) => {
     })
 })
 
-app.get('/api/notes/:id', (request, response) => {
+app.get('/api/notes/:id', (request, response, next) => {
     Note.findById(request.params.id)
         .then(note => {
             if(note){
@@ -72,13 +72,14 @@ app.delete('/api/notes/:id', (request, response) => {
 })
 
 app.put('/api/notes/:id', (request, response, next) => {
-    const {content, important} = request.body
+    const body = request.body
 
-    Note.findByIdAndUpdate(
-        request.params.id,
-        { content, important },
-        { new: true, runValidators: true, context: 'query' }
-    )
+    const note = {
+        content: body.content,
+        important: body.important,
+    }
+
+    Note.findByIdAndUpdate(request.params.id, note, {new: true} )
     .then(updatedNote => {
         response.json(updatedNote)
     })
